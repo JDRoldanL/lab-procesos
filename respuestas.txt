@@ -1,0 +1,47 @@
+1. ¿Cuál es el valor de la variable en el proceso hijo?
+        La valriable de x = 100, es el mismo en ambos proceso, en el padre y en el hijo.
+    
+    ¿Qué sucede con la variable cuando el proceso hijo y el padre cambian el valor de x?
+        Cuando se cambia la variable en el proceso hijo este aumenta la variable en 1 y su valor retorna 101,
+        sin embargo, cuando se cambia en el padre y se hace un incremento de 2, como el valor era el mismo
+        para ambos(de 100), esta queda valiendo 102 y no 103.
+
+
+2. ¿Pueden el padre y el hijo acceder al file descriptor retornado por open()?
+        Si ambos pueden acceder al fd retornado por el open()
+    ¿Qué pasa si ellos empiezan a escribir el archivo de manera concurrente, es decir, a la misma vez?
+        Como ambos pueden acceder, ambos pueden escribir sobre el archivo como se evidencia el la imagen
+        depues de compilar el codigo.
+
+
+3. Se puede hacer que el proceso hijo escriba primero, si el proceso padre
+    es detenido por el suficiente tiempo para que el hijo termine, en este caso
+    usando un sleep de 2 segundos para el proceso padre.
+
+
+4.  Esta familia de funciones, reemplaza la imagen de memoria actual del proceso con una nueva imagen de memoria.
+	En caso de que la llamada a la función sea correcta esta no retorna nada, si hay una falla el valor retornado será -1.
+	Se usa la funcion wait para que el padre puedar terminar de ejecutarse.
+	Lo diferente de cada una de estas funciones es como es llamada o invocada ya que cada una recibe parametros diferentes.
+
+
+5.  Escriba ahora un programa que use wait() para esperar que el proceso 
+	hijo finalice su ejecución. ¿Cuál es el valor de retorno de la función 
+	wait()?, ¿Qué pasa si usted usa la función wait en el hijo?
+	La funcion wait retorna la ID del proceso secundario ejecutado.
+	Si la funcion wait() es usada dentro de un proceso hijo que no crea mas procesos
+	retornara -1 como se puede observar.
+
+6.  Haga un programa, como el del ejercicio anterior, con una breve modificación, la cual consiste en usar waitpid() en lugar de wait().
+	¿Cuándo podría ser waitpid() útil?
+		Al igual que wait(), waitpid() sirve para lo mismo, la diferencia respecto a wait() es que waitpid() es que
+		detiene el proceso que se esta ejecutando y espera por el proceso que se le indique, es decir, no necesariamente va a esperar a que todos los
+		hijos terminen de ejecutarse sino aquel que fue enviado a la funcion waitpid()
+		Puede ser util cuando se tienen multiples hijos de un proceso,pero es necesario detener el proceso principial porque es necesario que uno de sus
+		hijos terminen sin tener que detener el resto de ellos.
+
+
+7.  Escriba un programa que cree un proceso hijo y entonces en el proceso hijo cierre la salida estandar (STDOUT FILENO).
+    ¿Qué pasa si el hijo llama printf() para imprimir alguna salida después de cerrar el descriptor?
+    	Lo que sucede cuando el hijo cierra el descriptor, es que no puede usar la funcion printf(),
+    	impidiendo que se pueda hacer uso del write que es un syscall.
